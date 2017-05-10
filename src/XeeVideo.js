@@ -1,5 +1,6 @@
 import jQuery from 'jquery';
 
+import {version} from '../package.json';
 import XeeMedia from './XeeMedia';
 
 const $ = jQuery;
@@ -81,5 +82,6 @@ class XeeVideo extends XeeMedia {
 XeeVideo.IS_SUPPORT_MEDIA = XeeMedia.IS_SUPPORT_MEDIA;
 XeeVideo.PLAY_THROUGH = XeeMedia.PLAY_THROUGH;
 XeeVideo.CAN_PLAY = XeeMedia.CAN_PLAY;
+XeeVideo.version = version;
 
 export default XeeVideo;

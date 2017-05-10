@@ -10,6 +10,8 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _package = require('../package.json');
+
 var _XeeMedia2 = require('./XeeMedia');
 
 var _XeeMedia3 = _interopRequireDefault(_XeeMedia2);
@@ -64,6 +66,7 @@ var XeeAudio = function (_XeeMedia) {
 XeeAudio.IS_SUPPORT_MEDIA = _XeeMedia3.default.IS_SUPPORT_MEDIA;
 XeeAudio.PLAY_THROUGH = _XeeMedia3.default.PLAY_THROUGH;
 XeeAudio.CAN_PLAY = _XeeMedia3.default.CAN_PLAY;
+XeeAudio.version = _package.version;
 
 exports.default = XeeAudio;
 module.exports = exports['default'];

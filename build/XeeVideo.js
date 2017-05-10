@@ -10,6 +10,8 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _package = require('../package.json');
+
 var _XeeMedia2 = require('./XeeMedia');
 
 var _XeeMedia3 = _interopRequireDefault(_XeeMedia2);
@@ -77,6 +79,7 @@ var XeeVideo = function (_XeeMedia) {
 XeeVideo.IS_SUPPORT_MEDIA = _XeeMedia3.default.IS_SUPPORT_MEDIA;
 XeeVideo.PLAY_THROUGH = _XeeMedia3.default.PLAY_THROUGH;
 XeeVideo.CAN_PLAY = _XeeMedia3.default.CAN_PLAY;
+XeeVideo.version = _package.version;
 
 exports.default = XeeVideo;
 module.exports = exports['default'];
