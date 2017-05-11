@@ -16,7 +16,7 @@ var _XeeMedia2 = require('./XeeMedia');
 
 var _XeeMedia3 = _interopRequireDefault(_XeeMedia2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -24,7 +24,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var $ = _jquery2.default;
+var $ = _jquery2["default"];
 
 $('head').append($('\n    <style type="text/css">\n        .video__wrapper {\n            position: relative;\n        }\n        .video__main {\n            display: block;\n            width: 100%;\n            height: 100%;\n            position: absolute;\n            left: 0;\n            top: 0;\n        }\n        .video__main.media--loading {\n            display: none;\n        }\n        .video__img{\n            display: block;\n            width: 100%;\n            height: 100%;\n            position: absolute;\n            left: 0;\n            top: 0;\n            opacity: 1;\n            filter: alpha(opacity=100);\n            transition: all .8s ease-in-out;\n        }\n        .video--show .video__img{\n            opacity: 0;\n            filter: alpha(opacity=0);\n        }\n    </style>\n'));
 
@@ -43,7 +43,7 @@ var XeeVideo = function (_XeeMedia) {
             _this.$media = $('<video src="' + opt.src + '">');
         }
 
-        if (_XeeMedia3.default.IS_SUPPORT_MEDIA) {
+        if (_XeeMedia3["default"].IS_SUPPORT_MEDIA) {
             _this.__init__();
             _this.onDone(function () {
                 _this.$wrapper && _this.$wrapper.addClass('video--show');
@@ -58,7 +58,7 @@ var XeeVideo = function (_XeeMedia) {
             var media = this.$media[0];
             var className = media.className;
 
-            if (!_XeeMedia3.default.IS_SUPPORT_MEDIA && !!opt.img) {
+            if (!_XeeMedia3["default"].IS_SUPPORT_MEDIA && !!opt.img) {
                 this.$media.append($('<img class="video__img" src="' + opt.img + '">'));
 
                 return false;
@@ -74,12 +74,12 @@ var XeeVideo = function (_XeeMedia) {
     }]);
 
     return XeeVideo;
-}(_XeeMedia3.default);
+}(_XeeMedia3["default"]);
 
-XeeVideo.IS_SUPPORT_MEDIA = _XeeMedia3.default.IS_SUPPORT_MEDIA;
-XeeVideo.PLAY_THROUGH = _XeeMedia3.default.PLAY_THROUGH;
-XeeVideo.CAN_PLAY = _XeeMedia3.default.CAN_PLAY;
+XeeVideo.IS_SUPPORT_MEDIA = _XeeMedia3["default"].IS_SUPPORT_MEDIA;
+XeeVideo.PLAY_THROUGH = _XeeMedia3["default"].PLAY_THROUGH;
+XeeVideo.CAN_PLAY = _XeeMedia3["default"].CAN_PLAY;
 XeeVideo.version = _package.version;
 
-exports.default = XeeVideo;
+exports["default"] = XeeVideo;
 module.exports = exports['default'];

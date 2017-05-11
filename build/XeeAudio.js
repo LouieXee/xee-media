@@ -16,7 +16,7 @@ var _XeeMedia2 = require('./XeeMedia');
 
 var _XeeMedia3 = _interopRequireDefault(_XeeMedia2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -24,7 +24,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var $ = _jquery2.default;
+var $ = _jquery2["default"];
 
 var XeeAudio = function (_XeeMedia) {
     _inherits(XeeAudio, _XeeMedia);
@@ -41,7 +41,7 @@ var XeeAudio = function (_XeeMedia) {
             _this.__getWrapper__().append(_this.$media);
         }
 
-        _XeeMedia3.default.IS_SUPPORT_MEDIA && _this.__init__();
+        _XeeMedia3["default"].IS_SUPPORT_MEDIA && _this.__init__();
         return _this;
     }
 
@@ -61,12 +61,12 @@ var XeeAudio = function (_XeeMedia) {
     }]);
 
     return XeeAudio;
-}(_XeeMedia3.default);
+}(_XeeMedia3["default"]);
 
-XeeAudio.IS_SUPPORT_MEDIA = _XeeMedia3.default.IS_SUPPORT_MEDIA;
-XeeAudio.PLAY_THROUGH = _XeeMedia3.default.PLAY_THROUGH;
-XeeAudio.CAN_PLAY = _XeeMedia3.default.CAN_PLAY;
+XeeAudio.IS_SUPPORT_MEDIA = _XeeMedia3["default"].IS_SUPPORT_MEDIA;
+XeeAudio.PLAY_THROUGH = _XeeMedia3["default"].PLAY_THROUGH;
+XeeAudio.CAN_PLAY = _XeeMedia3["default"].CAN_PLAY;
 XeeAudio.version = _package.version;
 
-exports.default = XeeAudio;
+exports["default"] = XeeAudio;
 module.exports = exports['default'];

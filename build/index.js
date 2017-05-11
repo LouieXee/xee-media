@@ -13,7 +13,7 @@ var _XeeVideo = require('./XeeVideo');
 
 var _XeeVideo2 = _interopRequireDefault(_XeeVideo);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-exports.XeeVideo = _XeeVideo2.default;
-exports.XeeAudio = _XeeAudio2.default;
+exports.XeeVideo = _XeeVideo2["default"];
+exports.XeeAudio = _XeeAudio2["default"];

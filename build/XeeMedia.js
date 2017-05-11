@@ -10,7 +10,7 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -18,10 +18,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Base = _xeeUtils2.default.Base,
-    Events = _xeeUtils2.default.Events;
+var Base = _xeeUtils2["default"].Base,
+    Events = _xeeUtils2["default"].Events;
 
-var $ = _jquery2.default;
+var $ = _jquery2["default"];
 
 // 是否支持多媒体
 var IS_SUPPORT_MEDIA = function () {
@@ -48,7 +48,7 @@ var MyMedia = function (_Base) {
     function MyMedia(opt) {
         _classCallCheck(this, MyMedia);
 
-        if (!_jquery2.default) {
+        if (!_jquery2["default"]) {
             var _ret;
 
             console.log('MyMedia 依赖于jquery.js，请提前载入相应模块!');
@@ -58,11 +58,11 @@ var MyMedia = function (_Base) {
         var _this2 = _possibleConstructorReturn(this, (MyMedia.__proto__ || Object.getPrototypeOf(MyMedia)).call(this));
 
         _this2.__options__ = {
-            time: _xeeUtils2.default.isNumber(opt.time) ? opt.time : 0,
-            volume: _xeeUtils2.default.isNumber(opt.volume) ? opt.volume : 1,
-            autoplay: _xeeUtils2.default.isBoolean(opt.autoplay) ? opt.autoplay : false,
-            loop: _xeeUtils2.default.isBoolean(opt.loop) ? opt.loop : false,
-            preload: _xeeUtils2.default.isBoolean(opt.preload) ? opt.preload : true,
+            time: _xeeUtils2["default"].isNumber(opt.time) ? opt.time : 0,
+            volume: _xeeUtils2["default"].isNumber(opt.volume) ? opt.volume : 1,
+            autoplay: _xeeUtils2["default"].isBoolean(opt.autoplay) ? opt.autoplay : false,
+            loop: _xeeUtils2["default"].isBoolean(opt.loop) ? opt.loop : false,
+            preload: _xeeUtils2["default"].isBoolean(opt.preload) ? opt.preload : true,
             showTime: opt.showTime || CAN_PLAY
         };
 
@@ -161,7 +161,7 @@ var MyMedia = function (_Base) {
 
                     _this._events.emit('loading', current, duration);
 
-                    loadRAFId = _xeeUtils2.default.RAF(_onLoad2);
+                    loadRAFId = _xeeUtils2["default"].RAF(_onLoad2);
                 };
 
                 media.preload = 'auto';
@@ -255,7 +255,7 @@ var MyMedia = function (_Base) {
         value: function time(val) {
             if (!IS_SUPPORT_MEDIA) return false;
 
-            if (_xeeUtils2.default.isNumber(val)) {
+            if (_xeeUtils2["default"].isNumber(val)) {
                 try {
                     this.$media[0].currentTime = val;
                 } catch (e) {
@@ -272,7 +272,7 @@ var MyMedia = function (_Base) {
         value: function volume(val) {
             if (!IS_SUPPORT_MEDIA) return false;
 
-            if (_xeeUtils2.default.isNumber(val)) {
+            if (_xeeUtils2["default"].isNumber(val)) {
                 this.$media[0].volume = val;
 
                 return true;
