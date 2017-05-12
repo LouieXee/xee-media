@@ -1,6 +1,6 @@
 {
   "name": "xee-media",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "xeeType": "component",
   "main": "build/index.js",
