@@ -5,5 +5,9 @@
   "xeeType": "component",
   "main": "build/index.js",
   "author": "hzxiezhongzheng",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^1.11.3",
+    "xee-utils": "*"
+  }
 }
