@@ -69,9 +69,9 @@ class MyMedia extends Base {
         let isDone = false;
         let isWaitToPlay = false;
 
-        this._events = new Events();
+        this.__events__ = new Events();
 
-        this._events.on('play', () => {
+        this.__events__.on('playIfDone', () => {
             if (isDone) {
                 this.__delayPlay__();
             } else {
@@ -80,12 +80,12 @@ class MyMedia extends Base {
             }
         });
 
-        this._events.on('pause', () => {
+        this.__events__.on('pause', () => {
             this.__pause__();
             isWaitToPlay = false;
         })
 
-        this._events.on('done', () => {
+        this.__events__.on('done', () => {
             this.$media.removeClass('media--loading');
             isDone = true;
             if (isWaitToPlay) {
@@ -93,7 +93,7 @@ class MyMedia extends Base {
             }
         })
 
-        this._events.on('loading', () => {
+        this.__events__.on('loading', () => {
             this.$media.addClass('media--loading');
         })
     }
@@ -139,7 +139,7 @@ class MyMedia extends Base {
                     return true;
                 }
 
-                _this._events.emit('loading', current, duration)
+                _this.__events__.emit('loading', current, duration)
 
                 loadRAFId = xeeUtils.RAF(_onLoad);
             }
@@ -151,8 +151,9 @@ class MyMedia extends Base {
         let media = this.$media[0];
 
         clearTimeout(this.__playTimeoutId__);
-        this.__playTimeoutId__ = setTimeout(function () {
-            media.paused && media.play();
+        this.__playTimeoutId__ = setTimeout(() => {
+            media.paused && media.play(); 
+            this.__events__.emit('play');
         }, DELAY)
     }
 
@@ -165,7 +166,7 @@ class MyMedia extends Base {
 
     __done__ () {
         setTimeout(()=>{
-            this._events.emit('done');
+            this.__events__.emit('done');
         })
     }
 
@@ -176,7 +177,7 @@ class MyMedia extends Base {
     play () {
         if (!IS_SUPPORT_MEDIA) return this;
 
-        this._events.emit('play');
+        this.__events__.emit('playIfDone');
 
         return this;
     }
@@ -184,7 +185,7 @@ class MyMedia extends Base {
     pause () {
         if (!IS_SUPPORT_MEDIA) return this;
 
-        this._events.emit('pause');
+        this.__events__.emit('pause');
 
         return this;
     }
@@ -235,6 +236,30 @@ class MyMedia extends Base {
         return this.$media[0].volume;
     }
 
+    onPlay (cb) {
+        if (!IS_SUPPORT_MEDIA) {
+            return false;
+        }
+
+        this.__events__.on('play', cb);
+
+        return () => {
+            this.__events__.off('play', cb);
+        };
+    }
+
+    onPause (cb) {
+        if (!IS_SUPPORT_MEDIA) {
+            return false;
+        }
+
+        this.__events__.on('pause', cb);
+
+        return () => {
+            this.__events__.off('pause', cb);
+        };
+    }
+
     onEnd (cb) {
         if (!IS_SUPPORT_MEDIA) {
             return false;
@@ -264,10 +289,10 @@ class MyMedia extends Base {
             return false;
         }
 
-        this._events.on('done', cb);
+        this.__events__.on('done', cb);
 
         return () => {
-            this._events.off('done', cb);
+            this.__events__.off('done', cb);
         }
     }
 
@@ -276,10 +301,10 @@ class MyMedia extends Base {
             return false;
         }
 
-        this._events.on('loading', cb);
+        this.__events__.on('loading', cb);
 
         return () => {
-            this._events.off('loading', cb);
+            this.__events__.off('loading', cb);
         }
     }
 
