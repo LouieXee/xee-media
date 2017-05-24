@@ -117,10 +117,8 @@ class MyMedia extends Base {
             let initTime = _this.time();
 
             // 当需要加载全部资源时，如果视频非播放状态，只会加载前面部分文件资源。需要视频处于播放状态，才会加载全部文件资源
-            if (showTime == PLAY_THROUGH) {
-                _this.volume(0);
-                _this.__delayPlay__();
-            }
+            _this.volume(0);
+            _this.__delayPlay__();
             _onLoad();
 
             function _onLoad () {
