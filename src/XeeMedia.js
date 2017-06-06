@@ -14,12 +14,6 @@ const IS_SUPPORT_MEDIA = (function () {
 const CAN_PLAY_THROUGH = 1;
 const CAN_PLAY = 0;
 
-/*
-    Uncaught (in promise) DOMException: The play() request was interrupted by a call to pause().
-    延时暂停和播放
-*/
-const DELAY = 0;
-
 // 判断是否已加载时长与全部时长之间的差值是否小于这个值
 const DELTA = 1;
 
@@ -43,7 +37,6 @@ class MyMedia extends Base {
         };
 
         this.__isLoading__ = false;
-        this.__playTimeoutId__ = -1;
     }
 
     /*
@@ -148,17 +141,13 @@ class MyMedia extends Base {
     __delayPlay__ () {
         let media = this.$media[0];
 
-        clearTimeout(this.__playTimeoutId__);
-        this.__playTimeoutId__ = setTimeout(() => {
-            media.paused && media.play(); 
-            this.__events__.emit('play');
-        }, DELAY)
+        media.paused && media.play(); 
+        this.__events__.emit('play');
     }
 
     __pause__ () {
         let media = this.$media[0];
 
-        clearTimeout(this.__playTimeoutId__);
         !media.paused && media.pause();
     }
 

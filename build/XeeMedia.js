@@ -34,12 +34,6 @@ var IS_SUPPORT_MEDIA = function () {
 var CAN_PLAY_THROUGH = 1;
 var CAN_PLAY = 0;
 
-/*
-    Uncaught (in promise) DOMException: The play() request was interrupted by a call to pause().
-    延时暂停和播放
-*/
-var DELAY = 0;
-
 // 判断是否已加载时长与全部时长之间的差值是否小于这个值
 var DELTA = 1;
 
@@ -68,7 +62,6 @@ var MyMedia = function (_Base) {
         };
 
         _this2.__isLoading__ = false;
-        _this2.__playTimeoutId__ = -1;
         return _this2;
     }
 
@@ -182,31 +175,25 @@ var MyMedia = function (_Base) {
     }, {
         key: '__delayPlay__',
         value: function __delayPlay__() {
-            var _this4 = this;
-
             var media = this.$media[0];
 
-            clearTimeout(this.__playTimeoutId__);
-            this.__playTimeoutId__ = setTimeout(function () {
-                media.paused && media.play();
-                _this4.__events__.emit('play');
-            }, DELAY);
+            media.paused && media.play();
+            this.__events__.emit('play');
         }
     }, {
         key: '__pause__',
         value: function __pause__() {
             var media = this.$media[0];
 
-            clearTimeout(this.__playTimeoutId__);
             !media.paused && media.pause();
         }
     }, {
         key: '__done__',
         value: function __done__() {
-            var _this5 = this;
+            var _this4 = this;
 
             setTimeout(function () {
-                _this5.__events__.emit('done');
+                _this4.__events__.emit('done');
             });
         }
     }, {
@@ -285,7 +272,7 @@ var MyMedia = function (_Base) {
     }, {
         key: 'onPlay',
         value: function onPlay(cb) {
-            var _this6 = this;
+            var _this5 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -294,13 +281,13 @@ var MyMedia = function (_Base) {
             this.__events__.on('play', cb);
 
             return function () {
-                _this6.__events__.off('play', cb);
+                _this5.__events__.off('play', cb);
             };
         }
     }, {
         key: 'onPause',
         value: function onPause(cb) {
-            var _this7 = this;
+            var _this6 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -309,13 +296,13 @@ var MyMedia = function (_Base) {
             this.__events__.on('pause', cb);
 
             return function () {
-                _this7.__events__.off('pause', cb);
+                _this6.__events__.off('pause', cb);
             };
         }
     }, {
         key: 'onEnd',
         value: function onEnd(cb) {
-            var _this8 = this;
+            var _this7 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -324,13 +311,13 @@ var MyMedia = function (_Base) {
             this.$media.on('ended', cb);
 
             return function () {
-                _this8.$media.off('ended', cb);
+                _this7.$media.off('ended', cb);
             };
         }
     }, {
         key: 'onTimeUpdate',
         value: function onTimeUpdate(cb) {
-            var _this9 = this;
+            var _this8 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -339,13 +326,13 @@ var MyMedia = function (_Base) {
             this.$media.on('timeupdate', cb);
 
             return function () {
-                _this9.$media.off('timeupdate', cb);
+                _this8.$media.off('timeupdate', cb);
             };
         }
     }, {
         key: 'onDone',
         value: function onDone(cb) {
-            var _this10 = this;
+            var _this9 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -354,13 +341,13 @@ var MyMedia = function (_Base) {
             this.__events__.on('done', cb);
 
             return function () {
-                _this10.__events__.off('done', cb);
+                _this9.__events__.off('done', cb);
             };
         }
     }, {
         key: 'onLoading',
         value: function onLoading(cb) {
-            var _this11 = this;
+            var _this10 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -369,7 +356,7 @@ var MyMedia = function (_Base) {
             this.__events__.on('loading', cb);
 
             return function () {
-                _this11.__events__.off('loading', cb);
+                _this10.__events__.off('loading', cb);
             };
         }
     }]);
