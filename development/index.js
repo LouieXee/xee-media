@@ -4,7 +4,7 @@ import {XeeVideo, XeeAudio} from '../src';
 
 new XeeVideo({
     ele: document.querySelector('.video'),
-    img: 'https://test.nie.163.com/test_cdn/tianyu/pc/zt/20170602190225/bg_f44f254.jpg',
+    img: 'https://tianyu.res.netease.com/pc/zt/20161104095024/img/bg_aa4708d.jpg',
     autoplay: true,
     loop: true
 })
