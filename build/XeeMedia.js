@@ -19,7 +19,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Base = _xeeUtils2["default"].Base,
-    Events = _xeeUtils2["default"].Events;
+    Events = _xeeUtils2["default"].Events,
+    raf = _xeeUtils2["default"].raf;
 
 var $ = _jquery2["default"];
 
@@ -161,7 +162,7 @@ var MyMedia = function (_Base) {
 
                     _this.__events__.emit('loading', current, duration);
 
-                    loadRAFId = _xeeUtils2["default"].RAF(_onLoad2);
+                    loadRAFId = raf(_onLoad2);
                 };
 
                 media.preload = 'auto';
