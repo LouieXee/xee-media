@@ -1,7 +1,7 @@
 import xeeUtils from 'xee-utils';
 import jQuery from 'jquery';
 
-const {Base, Events} = xeeUtils;
+const {Base, Events, raf} = xeeUtils;
 const $ = jQuery;
 
 // 是否支持多媒体
@@ -139,7 +139,7 @@ class MyMedia extends Base {
 
                 _this.__events__.emit('loading', current, duration)
 
-                loadRAFId = xeeUtils.RAF(_onLoad);
+                loadRAFId = raf(_onLoad);
             }
         }
     }

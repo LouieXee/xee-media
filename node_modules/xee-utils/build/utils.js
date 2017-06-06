@@ -56,18 +56,16 @@ var utils = {
         return _getType(target) === '[object Boolean]';
     },
 
-    RAF: function RAF(cb) {
-        utils.RAF = (window.requestAnimationFrame || function (cb) {
+    raf: function raf(cb) {
+        utils.raf = (window.requestAnimationFrame || function (cb) {
             return setTimeout(cb, 1000 / 60);
         }).bind(window);
-        return utils.RAF(cb);
-    },
 
-    cancelRAF: function cancelRAF(id) {
-        utils.cancelRAF = (window.cancelAnimationFrame || function (id) {
+        utils.raf.cancel = (window.cancelAnimationFrame || function (id) {
             return clearTimeout(id);
         }).bind(window);
-        return utils.cancelRAF(id);
+
+        return utils.raf(cb);
     },
 
     /*
