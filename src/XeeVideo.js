@@ -18,9 +18,6 @@ $('head').append($(`
             left: 0;
             top: 0;
         }
-        .video__main.media--loading {
-            display: none;
-        }
         .video__img{
             display: block;
             width: 100%;
@@ -46,7 +43,7 @@ class XeeVideo extends XeeMedia {
 
         if (opt.ele) {
             this.$media = $(opt.ele);
-            opt.img && this.__initDOM__(opt);
+            opt.img && this.__appendImg__(opt.img);
         } else {
             this.$media = $(`<video src="${opt.src}">`);
         }
@@ -59,28 +56,29 @@ class XeeVideo extends XeeMedia {
         }
     }
 
-    __initDOM__ (opt) {
+    __appendImg__ (img) {
         let media = this.$media[0];
         let className = media.className;
 
-        if (!XeeMedia.IS_SUPPORT_MEDIA && !!opt.img) {
-            this.$media.append($(`<img class="video__img" src="${opt.img}">`));
+        if (!XeeMedia.IS_SUPPORT_MEDIA) {
+            $(`<img class="${className}" src="${img}">`).insertAfter(this.$media);
+            this.$media.remove();
 
             return false;
         }
 
         media.className = '';
         this.$wrapper = $(`<div class="video__wrapper ${className}">`);
-        this.$wrapper.append($(`<img class="video__img" src="${opt.img}">`));
         this.$wrapper.insertAfter(this.$media);
-        this.$media.detach();
-        this.$wrapper.prepend(this.$media.addClass('video__main'));
+        this.$media.remove();
+        this.$wrapper.append(this.$media.addClass('video__main'));
+        this.$wrapper.append($(`<img class="video__img" src="${img}">`));
     }
 
 }
 
 XeeVideo.IS_SUPPORT_MEDIA = XeeMedia.IS_SUPPORT_MEDIA;
-XeeVideo.PLAY_THROUGH = XeeMedia.PLAY_THROUGH;
+XeeVideo.CAN_PLAY_THROUGH = XeeMedia.CAN_PLAY_THROUGH;
 XeeVideo.CAN_PLAY = XeeMedia.CAN_PLAY;
 XeeVideo.version = version;
 

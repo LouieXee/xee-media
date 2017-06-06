@@ -64,7 +64,7 @@ var XeeAudio = function (_XeeMedia) {
 }(_XeeMedia3["default"]);
 
 XeeAudio.IS_SUPPORT_MEDIA = _XeeMedia3["default"].IS_SUPPORT_MEDIA;
-XeeAudio.PLAY_THROUGH = _XeeMedia3["default"].PLAY_THROUGH;
+XeeAudio.CAN_PLAY_THROUGH = _XeeMedia3["default"].CAN_PLAY_THROUGH;
 XeeAudio.CAN_PLAY = _XeeMedia3["default"].CAN_PLAY;
 XeeAudio.version = _package.version;
 

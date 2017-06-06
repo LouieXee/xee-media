@@ -35,7 +35,7 @@ class XeeAudio extends XeeMedia {
 }
 
 XeeAudio.IS_SUPPORT_MEDIA = XeeMedia.IS_SUPPORT_MEDIA;
-XeeAudio.PLAY_THROUGH = XeeMedia.PLAY_THROUGH;
+XeeAudio.CAN_PLAY_THROUGH = XeeMedia.CAN_PLAY_THROUGH;
 XeeAudio.CAN_PLAY = XeeMedia.CAN_PLAY;
 XeeAudio.version = version;
 

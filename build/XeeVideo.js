@@ -26,7 +26,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var $ = _jquery2["default"];
 
-$('head').append($('\n    <style type="text/css">\n        .video__wrapper {\n            position: relative;\n        }\n        .video__main {\n            display: block;\n            width: 100%;\n            height: 100%;\n            position: absolute;\n            left: 0;\n            top: 0;\n        }\n        .video__main.media--loading {\n            display: none;\n        }\n        .video__img{\n            display: block;\n            width: 100%;\n            height: 100%;\n            position: absolute;\n            left: 0;\n            top: 0;\n            opacity: 1;\n            filter: alpha(opacity=100);\n            transition: all .8s ease-in-out;\n        }\n        .video--show .video__img{\n            opacity: 0;\n            filter: alpha(opacity=0);\n        }\n    </style>\n'));
+$('head').append($('\n    <style type="text/css">\n        .video__wrapper {\n            position: relative;\n        }\n        .video__main {\n            display: block;\n            width: 100%;\n            height: 100%;\n            position: absolute;\n            left: 0;\n            top: 0;\n        }\n        .video__img{\n            display: block;\n            width: 100%;\n            height: 100%;\n            position: absolute;\n            left: 0;\n            top: 0;\n            opacity: 1;\n            filter: alpha(opacity=100);\n            transition: all .8s ease-in-out;\n        }\n        .video--show .video__img{\n            opacity: 0;\n            filter: alpha(opacity=0);\n        }\n    </style>\n'));
 
 var XeeVideo = function (_XeeMedia) {
     _inherits(XeeVideo, _XeeMedia);
@@ -38,7 +38,7 @@ var XeeVideo = function (_XeeMedia) {
 
         if (opt.ele) {
             _this.$media = $(opt.ele);
-            opt.img && _this.__initDOM__(opt);
+            opt.img && _this.__appendImg__(opt.img);
         } else {
             _this.$media = $('<video src="' + opt.src + '">');
         }
@@ -53,23 +53,24 @@ var XeeVideo = function (_XeeMedia) {
     }
 
     _createClass(XeeVideo, [{
-        key: '__initDOM__',
-        value: function __initDOM__(opt) {
+        key: '__appendImg__',
+        value: function __appendImg__(img) {
             var media = this.$media[0];
             var className = media.className;
 
-            if (!_XeeMedia3["default"].IS_SUPPORT_MEDIA && !!opt.img) {
-                this.$media.append($('<img class="video__img" src="' + opt.img + '">'));
+            if (!_XeeMedia3["default"].IS_SUPPORT_MEDIA) {
+                $('<img class="' + className + '" src="' + img + '">').insertAfter(this.$media);
+                this.$media.remove();
 
                 return false;
             }
 
             media.className = '';
             this.$wrapper = $('<div class="video__wrapper ' + className + '">');
-            this.$wrapper.append($('<img class="video__img" src="' + opt.img + '">'));
             this.$wrapper.insertAfter(this.$media);
-            this.$media.detach();
-            this.$wrapper.prepend(this.$media.addClass('video__main'));
+            this.$media.remove();
+            this.$wrapper.append(this.$media.addClass('video__main'));
+            this.$wrapper.append($('<img class="video__img" src="' + img + '">'));
         }
     }]);
 
@@ -77,7 +78,7 @@ var XeeVideo = function (_XeeMedia) {
 }(_XeeMedia3["default"]);
 
 XeeVideo.IS_SUPPORT_MEDIA = _XeeMedia3["default"].IS_SUPPORT_MEDIA;
-XeeVideo.PLAY_THROUGH = _XeeMedia3["default"].PLAY_THROUGH;
+XeeVideo.CAN_PLAY_THROUGH = _XeeMedia3["default"].CAN_PLAY_THROUGH;
 XeeVideo.CAN_PLAY = _XeeMedia3["default"].CAN_PLAY;
 XeeVideo.version = _package.version;
 

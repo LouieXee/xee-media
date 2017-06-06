@@ -11,8 +11,8 @@ const IS_SUPPORT_MEDIA = (function () {
     return !!video.play && !!audio.play;
 })();
 
-const PLAY_THROUGH = 'PLAY_THROUGH';
-const CAN_PLAY = 'CAN_PLAY';
+const CAN_PLAY_THROUGH = 1;
+const CAN_PLAY = 0;
 
 /*
     Uncaught (in promise) DOMException: The play() request was interrupted by a call to pause().
@@ -39,7 +39,7 @@ class MyMedia extends Base {
             autoplay: xeeUtils.isBoolean(opt.autoplay) ? opt.autoplay : false,
             loop: xeeUtils.isBoolean(opt.loop) ? opt.loop : false,
             preload: xeeUtils.isBoolean(opt.preload) ? opt.preload : true,
-            showTime: opt.showTime || CAN_PLAY
+            doneTime: opt.doneTime || CAN_PLAY
         };
 
         this.__isLoading__ = false;
@@ -51,7 +51,7 @@ class MyMedia extends Base {
         @private
     */
     __init__ () {
-        this.__bindEvents__();
+        this.__bind__();
 
         this.time(this.__options__.time);
         this.volume(this.__options__.volume);
@@ -64,7 +64,7 @@ class MyMedia extends Base {
         this.__options__.autoplay && this.play();
     }
 
-    __bindEvents__ () {
+    __bind__ () {
         let media = this.$media[0];
         let isDone = false;
         let isWaitToPlay = false;
@@ -104,11 +104,11 @@ class MyMedia extends Base {
 
         let _this = this;
         let media = this.$media[0];
-        let showTime = _this.__options__.showTime;
+        let doneTime = _this.__options__.doneTime;
         let loadRAFId = -1;
 
-        if ((showTime == CAN_PLAY && (media.readyState === media.HAVE_FUTURE_DATA || media.readyState == media.HAVE_ENOUGH_DATA)) || 
-            (showTime == PLAY_THROUGH && media.readyState == media.HAVE_ENOUGH_DATA)) {
+        if ((doneTime == CAN_PLAY && (media.readyState === media.HAVE_FUTURE_DATA || media.readyState == media.HAVE_ENOUGH_DATA)) || 
+            (doneTime == CAN_PLAY_THROUGH && media.readyState == media.HAVE_ENOUGH_DATA)) {
             _this.__done__();
         } else {
             media.preload = 'auto';
@@ -129,7 +129,7 @@ class MyMedia extends Base {
                     current = media.buffered.end(0);
                 }
 
-                if ((showTime == PLAY_THROUGH && current > 0 && current >= duration - DELTA) || (showTime == CAN_PLAY && current > 0)) {
+                if ((doneTime == CAN_PLAY_THROUGH && current > 0 && current >= duration - DELTA) || (doneTime == CAN_PLAY && current > 0)) {
                     _this.__pause__();
                     _this.time(initTime);
                     _this.volume(initVolume);
@@ -169,7 +169,7 @@ class MyMedia extends Base {
     }
 
     getElement () {
-        return this.$media;
+        return this.$media[0];
     }
 
     play () {
@@ -309,7 +309,7 @@ class MyMedia extends Base {
 }
 
 MyMedia.IS_SUPPORT_MEDIA = IS_SUPPORT_MEDIA;
-MyMedia.PLAY_THROUGH = PLAY_THROUGH;
+MyMedia.CAN_PLAY_THROUGH = CAN_PLAY_THROUGH;
 MyMedia.CAN_PLAY = CAN_PLAY;
 
 module.exports = MyMedia;

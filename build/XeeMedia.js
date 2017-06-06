@@ -30,8 +30,8 @@ var IS_SUPPORT_MEDIA = function () {
     return !!video.play && !!audio.play;
 }();
 
-var PLAY_THROUGH = 'PLAY_THROUGH';
-var CAN_PLAY = 'CAN_PLAY';
+var CAN_PLAY_THROUGH = 1;
+var CAN_PLAY = 0;
 
 /*
     Uncaught (in promise) DOMException: The play() request was interrupted by a call to pause().
@@ -63,7 +63,7 @@ var MyMedia = function (_Base) {
             autoplay: _xeeUtils2["default"].isBoolean(opt.autoplay) ? opt.autoplay : false,
             loop: _xeeUtils2["default"].isBoolean(opt.loop) ? opt.loop : false,
             preload: _xeeUtils2["default"].isBoolean(opt.preload) ? opt.preload : true,
-            showTime: opt.showTime || CAN_PLAY
+            doneTime: opt.doneTime || CAN_PLAY
         };
 
         _this2.__isLoading__ = false;
@@ -80,7 +80,7 @@ var MyMedia = function (_Base) {
     _createClass(MyMedia, [{
         key: '__init__',
         value: function __init__() {
-            this.__bindEvents__();
+            this.__bind__();
 
             this.time(this.__options__.time);
             this.volume(this.__options__.volume);
@@ -93,8 +93,8 @@ var MyMedia = function (_Base) {
             this.__options__.autoplay && this.play();
         }
     }, {
-        key: '__bindEvents__',
-        value: function __bindEvents__() {
+        key: '__bind__',
+        value: function __bind__() {
             var _this3 = this;
 
             var media = this.$media[0];
@@ -137,10 +137,10 @@ var MyMedia = function (_Base) {
 
             var _this = this;
             var media = this.$media[0];
-            var showTime = _this.__options__.showTime;
+            var doneTime = _this.__options__.doneTime;
             var loadRAFId = -1;
 
-            if (showTime == CAN_PLAY && (media.readyState === media.HAVE_FUTURE_DATA || media.readyState == media.HAVE_ENOUGH_DATA) || showTime == PLAY_THROUGH && media.readyState == media.HAVE_ENOUGH_DATA) {
+            if (doneTime == CAN_PLAY && (media.readyState === media.HAVE_FUTURE_DATA || media.readyState == media.HAVE_ENOUGH_DATA) || doneTime == CAN_PLAY_THROUGH && media.readyState == media.HAVE_ENOUGH_DATA) {
                 _this.__done__();
             } else {
                 var _onLoad2 = function _onLoad2() {
@@ -151,7 +151,7 @@ var MyMedia = function (_Base) {
                         current = media.buffered.end(0);
                     }
 
-                    if (showTime == PLAY_THROUGH && current > 0 && current >= duration - DELTA || showTime == CAN_PLAY && current > 0) {
+                    if (doneTime == CAN_PLAY_THROUGH && current > 0 && current >= duration - DELTA || doneTime == CAN_PLAY && current > 0) {
                         _this.__pause__();
                         _this.time(initTime);
                         _this.volume(initVolume);
@@ -211,7 +211,7 @@ var MyMedia = function (_Base) {
     }, {
         key: 'getElement',
         value: function getElement() {
-            return this.$media;
+            return this.$media[0];
         }
     }, {
         key: 'play',
@@ -377,7 +377,7 @@ var MyMedia = function (_Base) {
 }(Base);
 
 MyMedia.IS_SUPPORT_MEDIA = IS_SUPPORT_MEDIA;
-MyMedia.PLAY_THROUGH = PLAY_THROUGH;
+MyMedia.CAN_PLAY_THROUGH = CAN_PLAY_THROUGH;
 MyMedia.CAN_PLAY = CAN_PLAY;
 
 module.exports = MyMedia;
