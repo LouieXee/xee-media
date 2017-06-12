@@ -20,11 +20,6 @@ const DELTA = 1;
 class MyMedia extends Base {
 
     constructor (opt) {
-        if (!jQuery) {
-            console.log('MyMedia 依赖于jquery.js，请提前载入相应模块!');
-            return false;
-        }
-
         super();
 
         this.__options__ = {
