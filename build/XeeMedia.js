@@ -43,13 +43,6 @@ var MyMedia = function (_Base) {
     function MyMedia(opt) {
         _classCallCheck(this, MyMedia);
 
-        if (!_jquery2["default"]) {
-            var _ret;
-
-            console.log('MyMedia 依赖于jquery.js，请提前载入相应模块!');
-            return _ret = false, _possibleConstructorReturn(_this2, _ret);
-        }
-
         var _this2 = _possibleConstructorReturn(this, (MyMedia.__proto__ || Object.getPrototypeOf(MyMedia)).call(this));
 
         _this2.__options__ = {
