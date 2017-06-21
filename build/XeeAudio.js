@@ -10,6 +10,10 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _xeeUtils = require('xee-utils');
+
+var _xeeUtils2 = _interopRequireDefault(_xeeUtils);
+
 var _package = require('../package.json');
 
 var _XeeMedia2 = require('./XeeMedia');
@@ -29,16 +33,23 @@ var $ = _jquery2["default"];
 var XeeAudio = function (_XeeMedia) {
     _inherits(XeeAudio, _XeeMedia);
 
-    function XeeAudio(opt) {
+    function XeeAudio(target) {
+        var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
         _classCallCheck(this, XeeAudio);
+
+        if (_xeeUtils2["default"].isObject(target)) {
+            opt = target;
+            target = target.ele || target.src;
+        }
 
         var _this = _possibleConstructorReturn(this, (XeeAudio.__proto__ || Object.getPrototypeOf(XeeAudio)).call(this, opt));
 
-        if (opt.ele) {
-            _this.$media = $(opt.ele);
-        } else {
-            _this.$media = $('<audio src="' + opt.src + '">');
+        if (_xeeUtils2["default"].isString(target)) {
+            _this.$media = $('<audio src="' + target + '">');
             _this.__getWrapper__().append(_this.$media);
+        } else if (Object.prototype.toString.call(target) == '[object HTMLAudioElement]') {
+            _this.$media = $(target);
         }
 
         _XeeMedia3["default"].IS_SUPPORT_MEDIA && _this.__init__();

@@ -35,7 +35,7 @@ var CAN_PLAY_THROUGH = 1;
 var CAN_PLAY = 0;
 
 // 判断是否已加载时长与全部时长之间的差值是否小于这个值
-var DELTA = 1;
+var DELTA = .5;
 
 var MyMedia = function (_Base) {
     _inherits(MyMedia, _Base);
@@ -50,7 +50,7 @@ var MyMedia = function (_Base) {
             volume: _xeeUtils2["default"].isNumber(opt.volume) ? opt.volume : 1,
             autoplay: _xeeUtils2["default"].isBoolean(opt.autoplay) ? opt.autoplay : false,
             loop: _xeeUtils2["default"].isBoolean(opt.loop) ? opt.loop : false,
-            preload: _xeeUtils2["default"].isBoolean(opt.preload) ? opt.preload : true,
+            preload: _xeeUtils2["default"].isBoolean(opt.preload) ? opt.preload : false,
             doneTime: opt.doneTime || CAN_PLAY
         };
 
@@ -114,6 +114,14 @@ var MyMedia = function (_Base) {
 
             this.__events__.on('loading', function () {
                 _this3.$media.addClass('media--loading');
+            });
+
+            this.__events__.on('done', function () {
+                _this3.$media.on('ended', function (e) {
+                    _this3.__events__.emit('ended', e);
+                }).on('timeupdate', function (e) {
+                    _this3.__events__.emit('timeupdate', e);
+                });
             });
         }
     }, {
@@ -293,39 +301,9 @@ var MyMedia = function (_Base) {
             };
         }
     }, {
-        key: 'onEnd',
-        value: function onEnd(cb) {
-            var _this7 = this;
-
-            if (!IS_SUPPORT_MEDIA) {
-                return false;
-            }
-
-            this.$media.on('ended', cb);
-
-            return function () {
-                _this7.$media.off('ended', cb);
-            };
-        }
-    }, {
-        key: 'onTimeUpdate',
-        value: function onTimeUpdate(cb) {
-            var _this8 = this;
-
-            if (!IS_SUPPORT_MEDIA) {
-                return false;
-            }
-
-            this.$media.on('timeupdate', cb);
-
-            return function () {
-                _this8.$media.off('timeupdate', cb);
-            };
-        }
-    }, {
         key: 'onDone',
         value: function onDone(cb) {
-            var _this9 = this;
+            var _this7 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -334,13 +312,13 @@ var MyMedia = function (_Base) {
             this.__events__.on('done', cb);
 
             return function () {
-                _this9.__events__.off('done', cb);
+                _this7.__events__.off('done', cb);
             };
         }
     }, {
         key: 'onLoading',
         value: function onLoading(cb) {
-            var _this10 = this;
+            var _this8 = this;
 
             if (!IS_SUPPORT_MEDIA) {
                 return false;
@@ -349,7 +327,37 @@ var MyMedia = function (_Base) {
             this.__events__.on('loading', cb);
 
             return function () {
-                _this10.__events__.off('loading', cb);
+                _this8.__events__.off('loading', cb);
+            };
+        }
+    }, {
+        key: 'onEnd',
+        value: function onEnd(cb) {
+            var _this9 = this;
+
+            if (!IS_SUPPORT_MEDIA) {
+                return false;
+            }
+
+            this.__events__.on('ended', cb);
+
+            return function () {
+                _this9.__events__.off('ended', cb);
+            };
+        }
+    }, {
+        key: 'onTimeUpdate',
+        value: function onTimeUpdate(cb) {
+            var _this10 = this;
+
+            if (!IS_SUPPORT_MEDIA) {
+                return false;
+            }
+
+            this.__events__.on('timeupdate', cb);
+
+            return function () {
+                _this10.__events__.off('timeupdate', cb);
             };
         }
     }]);

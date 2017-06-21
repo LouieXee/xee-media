@@ -10,6 +10,10 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _xeeUtils = require('xee-utils');
+
+var _xeeUtils2 = _interopRequireDefault(_xeeUtils);
+
 var _package = require('../package.json');
 
 var _XeeMedia2 = require('./XeeMedia');
@@ -31,16 +35,23 @@ $('head').append($('\n    <style type="text/css">\n        .video__wrapper {\n  
 var XeeVideo = function (_XeeMedia) {
     _inherits(XeeVideo, _XeeMedia);
 
-    function XeeVideo(opt) {
+    function XeeVideo(target) {
+        var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
         _classCallCheck(this, XeeVideo);
+
+        if (_xeeUtils2["default"].isObject(target)) {
+            opt = target;
+            target = target.ele || target.src;
+        }
 
         var _this = _possibleConstructorReturn(this, (XeeVideo.__proto__ || Object.getPrototypeOf(XeeVideo)).call(this, opt));
 
-        if (opt.ele) {
-            _this.$media = $(opt.ele);
+        if (_xeeUtils2["default"].isString(target)) {
+            _this.$media = $('<video src="' + target + '">');
+        } else if (Object.prototype.toString.call(target) == '[object HTMLVideoElement]') {
+            _this.$media = $(target);
             opt.img && _this.__appendImg__(opt.img);
-        } else {
-            _this.$media = $('<video src="' + opt.src + '">');
         }
 
         if (_XeeMedia3["default"].IS_SUPPORT_MEDIA) {
