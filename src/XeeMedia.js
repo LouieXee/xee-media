@@ -15,7 +15,7 @@ const CAN_PLAY_THROUGH = 1;
 const CAN_PLAY = 0;
 
 // 判断是否已加载时长与全部时长之间的差值是否小于这个值
-const DELTA = 1;
+const DELTA = .5;
 
 class MyMedia extends Base {
 
@@ -27,7 +27,7 @@ class MyMedia extends Base {
             volume: xeeUtils.isNumber(opt.volume) ? opt.volume : 1,
             autoplay: xeeUtils.isBoolean(opt.autoplay) ? opt.autoplay : false,
             loop: xeeUtils.isBoolean(opt.loop) ? opt.loop : false,
-            preload: xeeUtils.isBoolean(opt.preload) ? opt.preload : true,
+            preload: xeeUtils.isBoolean(opt.preload) ? opt.preload : false,
             doneTime: opt.doneTime || CAN_PLAY
         };
 
@@ -71,7 +71,7 @@ class MyMedia extends Base {
         this.__events__.on('pause', () => {
             this.__pause__();
             isWaitToPlay = false;
-        })
+        });
 
         this.__events__.on('done', () => {
             this.$media.removeClass('media--loading');
@@ -79,10 +79,20 @@ class MyMedia extends Base {
             if (isWaitToPlay) {
                 this.__delayPlay__();
             }
-        })
+        });
 
         this.__events__.on('loading', () => {
             this.$media.addClass('media--loading');
+        });
+
+        this.__events__.on('done', () => {
+            this.$media
+            .on('ended', e => {
+                this.__events__.emit('ended', e);
+            })
+            .on('timeupdate', e => {
+                this.__events__.emit('timeupdate', e);
+            })
         })
     }
 
@@ -242,30 +252,6 @@ class MyMedia extends Base {
         };
     }
 
-    onEnd (cb) {
-        if (!IS_SUPPORT_MEDIA) {
-            return false;
-        }
-
-        this.$media.on('ended', cb)
-
-        return () => {
-            this.$media.off('ended', cb);
-        };
-    }
-
-    onTimeUpdate (cb) {
-        if (!IS_SUPPORT_MEDIA) {
-            return false;
-        }
-
-        this.$media.on('timeupdate', cb);
-
-        return () => {
-            this.$media.off('timeupdate', cb);
-        }
-    }
-
     onDone (cb) {
         if (!IS_SUPPORT_MEDIA) {
             return false;
@@ -287,6 +273,30 @@ class MyMedia extends Base {
 
         return () => {
             this.__events__.off('loading', cb);
+        }
+    }
+
+    onEnd (cb) {
+        if (!IS_SUPPORT_MEDIA) {
+            return false;
+        }
+
+        this.__events__.on('ended', cb)
+
+        return () => {
+            this.__events__.off('ended', cb);
+        };
+    }
+
+    onTimeUpdate (cb) {
+        if (!IS_SUPPORT_MEDIA) {
+            return false;
+        }
+
+        this.__events__.on('timeupdate', cb);
+
+        return () => {
+            this.__events__.off('timeupdate', cb);
         }
     }
 

@@ -1,4 +1,5 @@
 import jQuery from 'jquery';
+import xeeUtils from 'xee-utils';
 
 import {version} from '../package.json';
 import XeeMedia from './XeeMedia';
@@ -38,14 +39,19 @@ $('head').append($(`
 
 class XeeVideo extends XeeMedia {
 
-    constructor (opt) {
-        super(opt)
+    constructor (target, opt = {}) {
+        if (xeeUtils.isObject(target)) {
+            opt = target;
+            target = target.ele || target.src;
+        }
 
-        if (opt.ele) {
-            this.$media = $(opt.ele);
+        super(opt);
+
+        if (xeeUtils.isString(target)) {
+            this.$media = $(`<video src="${target}">`);
+        } else if (Object.prototype.toString.call(target) == '[object HTMLVideoElement]') {
+            this.$media = $(target);
             opt.img && this.__appendImg__(opt.img);
-        } else {
-            this.$media = $(`<video src="${opt.src}">`);
         }
 
         if (XeeMedia.IS_SUPPORT_MEDIA) {
