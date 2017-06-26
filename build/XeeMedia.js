@@ -20,12 +20,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Base = _xeeUtils2["default"].Base,
     Events = _xeeUtils2["default"].Events,
-    raf = _xeeUtils2["default"].raf;
+    raf = _xeeUtils2["default"].raf,
+    support = _xeeUtils2["default"].support;
 
 var $ = _jquery2["default"];
 
 // 是否支持多媒体
-var IS_SUPPORT_MEDIA = function () {
+var IS_SUPPORT_MEDIA = typeof support.media != 'undefined' ? support.media : function () {
     var video = document.createElement('video');
     var audio = document.createElement('audio');
     return !!video.play && !!audio.play;

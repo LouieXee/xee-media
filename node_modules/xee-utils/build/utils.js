@@ -3,34 +3,47 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var count = 0; // 设置唯一ID用
+var __count__ = 0; // 设置唯一ID用
+var __style__ = document.createElement('div').style;
 
 var utils = {
-    IS_WEIXIN: _testUserAgent([/micromessenger/i]),
+    getAvaliableProperty: function getAvaliableProperty(properties) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-    IS_YIXIN: _testUserAgent([/yixin/i]),
+        try {
+            for (var _iterator = properties[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var property = _step.value;
 
-    IS_PC: !_testUserAgent([/Android/i, /iPhone/i, /SymbianOS/i, /Windows Phone/i, /iPad/i, /iPod/i]),
+                if (typeof __style__[property] != 'undefined') {
+                    return true;
+                }
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator["return"]) {
+                    _iterator["return"]();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
 
-    IS_IOS: _testUserAgent([/iPhone/i, /iPad/i, /iPod/i]),
+        return false;
+    },
 
-    IS_ANDROID: _testUserAgent([/Android/i]),
-
-    ANIMATION_NAME: _getStyleProperty(['animation']),
-
-    TRANSITION_NAME: _getStyleProperty(['transition']),
-
-    TRANSFORM_NAME: _getStyleProperty(['transform']),
 
     noop: function noop() {},
 
     getUniqueID: function getUniqueID() {
-        return new Date().getTime().toString(36).toUpperCase() + '' + (Math.random() * 10e16).toString(36).toUpperCase() + count++;
+        return new Date().getTime().toString(36).toUpperCase() + '' + (Math.random() * 10e16).toString(36).toUpperCase() + __count__++;
     },
-
-    getStyleProperty: _getStyleProperty,
-
-    testUserAgent: _testUserAgent,
 
     isString: function isString(target) {
         return _getType(target) === '[object String]';
@@ -149,31 +162,5 @@ exports["default"] = utils;
 
 function _getType(target) {
     return Object.prototype.toString.call(target);
-}
-
-function _testUserAgent(testArr) {
-    if (typeof window == 'undefined') return false;
-
-    var userAgentInfo = window.navigator.userAgent;
-    for (var v = 0; v < testArr.length; v++) {
-        if (testArr[v].test(userAgentInfo)) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function _getStyleProperty(testPropArr) {
-    if (typeof document == 'undefined') return false;
-
-    var divStyle = document.createElement('div').style;
-
-    for (var i = 0, l = testPropArr.length; i < l; i++) {
-        if (divStyle[testPropArr[i]] != undefined) {
-            return testPropArr[i];
-        }
-    }
-    return false;
 }
 module.exports = exports['default'];

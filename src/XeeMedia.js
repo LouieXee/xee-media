@@ -1,11 +1,11 @@
 import xeeUtils from 'xee-utils';
 import jQuery from 'jquery';
 
-const {Base, Events, raf} = xeeUtils;
+const {Base, Events, raf, support} = xeeUtils;
 const $ = jQuery;
 
 // 是否支持多媒体
-const IS_SUPPORT_MEDIA = (function () {
+const IS_SUPPORT_MEDIA = typeof support.media != 'undefined' ? support.media : (function () {
     let video = document.createElement('video');
     let audio = document.createElement('audio');
     return !!video.play && !!audio.play;
